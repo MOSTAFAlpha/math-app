@@ -15,7 +15,7 @@ import SVT from './pages/SVT';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/math-app">
       <Routes>
         {/* Main Landing Page */}
         <Route path="/" element={<Landing />} />
