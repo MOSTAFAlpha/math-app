@@ -22,7 +22,7 @@ src/data/
 
 ```bash
 # Copier le template
-copy src/data/TEMPLATE_chapter.jsx src/data/coursNouveauChapitre.jsx
+copy src/data/TEMPLATE_chapter.jsx src/data/coursNouveauChapitre.jsx 
 ```
 
 ### Étape 2: Modifier le contenu

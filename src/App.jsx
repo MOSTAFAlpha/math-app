@@ -9,6 +9,7 @@ import PhysiqueModule from './pages/PhysiqueModule';
 import SVTModule from './pages/SVTModule';
 import EnglishModule from './pages/EnglishModule';
 import FrenchModule from './pages/FrenchModule';
+import AdminPanel from './pages/AdminPanel';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           <Route path="/svt/*" element={<SVTModule />} />
           <Route path="/english/*" element={<EnglishModule />} />
           <Route path="/francais/*" element={<FrenchModule />} />
+
+          {/* Admin Panel */}
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </Router>
     </ThemeProvider>
@@ -33,4 +37,5 @@ function App() {
 }
 
 export default App;
+
 
