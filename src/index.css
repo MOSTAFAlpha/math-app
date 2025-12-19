@@ -13,6 +13,8 @@
   --color-math: #2563eb;
   --color-physique: #7c3aed;
   --color-svt: #059669;
+  --color-french: #dc2626;
+  --color-english: #ea580c;
 
   /* Accent Colors for Boxes */
   --color-retenir: #22c55e;
@@ -332,6 +334,14 @@ p {
 
 .subject-header.svt {
   background: linear-gradient(135deg, var(--color-svt) 0%, #047857 100%);
+}
+
+.subject-header.french {
+  background: linear-gradient(135deg, var(--color-french) 0%, #991b1b 100%);
+}
+
+.subject-header.english {
+  background: linear-gradient(135deg, var(--color-english) 0%, #c2410c 100%);
 }
 
 .subject-header h1 {
@@ -924,6 +934,26 @@ html.dark-mode .glass {
 .svt .chapter-card:hover {
   box-shadow:
     0 10px 40px rgba(5, 150, 105, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.french .chapter-card::before {
+  background: linear-gradient(180deg, var(--color-french) 0%, #f87171 100%);
+}
+
+.french .chapter-card:hover {
+  box-shadow:
+    0 10px 40px rgba(220, 38, 38, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.english .chapter-card::before {
+  background: linear-gradient(180deg, var(--color-english) 0%, #fb923c 100%);
+}
+
+.english .chapter-card:hover {
+  box-shadow:
+    0 10px 40px rgba(234, 88, 12, 0.15),
     0 4px 12px rgba(0, 0, 0, 0.08);
 }
 

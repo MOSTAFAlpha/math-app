@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Atom, Dna, GraduationCap, ChevronRight } from 'lucide-react';
+import { Calculator, Atom, Dna, GraduationCap, ChevronRight, Languages, BookText } from 'lucide-react';
 
 /**
  * Landing - Classroom-friendly landing page with large clickable subject cards
@@ -34,6 +34,24 @@ const Landing = () => {
             path: '/svt',
             color: '#059669',
             bgColor: '#d1fae5'
+        },
+        {
+            id: 'francais',
+            title: 'Français',
+            description: 'Production écrite, œuvres littéraires, figures de style...',
+            icon: BookText,
+            path: '/francais',
+            color: '#dc2626',
+            bgColor: '#fee2e2'
+        },
+        {
+            id: 'english',
+            title: 'English',
+            description: 'Writing skills, reading comprehension, grammar...',
+            icon: Languages,
+            path: '/english',
+            color: '#ea580c',
+            bgColor: '#ffedd5'
         }
     ];
 
