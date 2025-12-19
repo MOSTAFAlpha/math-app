@@ -28,8 +28,8 @@ const Landing = () => {
         },
         {
             id: 'svt',
-            title: 'Sciences de la Vie et de la Terre',
-            description: 'Génétique, immunologie, géologie...',
+            title: 'SVT',
+            description: 'Génétique, immunologie, géologie, écologie...',
             icon: Dna,
             path: '/svt',
             color: '#059669',
