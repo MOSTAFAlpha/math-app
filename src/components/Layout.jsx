@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation, Link, Outlet } from 'react-router-dom';
-import { Home, BookOpen, Layers, GitMerge, GraduationCap, ArrowLeft } from 'lucide-react';
+import { Home, BookOpen, Layers, GitMerge, GraduationCap, ChevronRight, Folder } from 'lucide-react';
 
 const Layout = ({ children }) => {
     const location = useLocation();
@@ -13,65 +13,79 @@ const Layout = ({ children }) => {
     ];
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-50">
-            {/* Header */}
-            <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-                <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <Link
-                            to="/"
-                            className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center transition-colors"
-                        >
-                            <ArrowLeft size={18} className="text-gray-600" />
-                        </Link>
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                                <GraduationCap size={18} className="text-white" />
-                            </div>
-                            <span className="font-semibold text-gray-900">Mathématiques</span>
+        <div className="flex flex-col min-h-screen bg-gray-100">
+            {/* Header - Green AlloSchool style */}
+            <header className="bg-emerald-600 text-white shadow-lg">
+                <div className="max-w-6xl mx-auto px-4">
+                    <div className="flex items-center justify-between h-14">
+                        <div className="flex items-center gap-3">
+                            <GraduationCap size={28} />
+                            <span className="text-xl font-bold">MaClasse</span>
                         </div>
+                        <nav className="hidden sm:flex items-center gap-6 text-sm">
+                            <Link to="/" className="flex items-center gap-1 hover:text-emerald-200">
+                                <Folder size={16} /> Toutes les matières
+                            </Link>
+                        </nav>
                     </div>
-                    <span className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full font-medium">
-                        2BAC PC
-                    </span>
                 </div>
             </header>
 
+            {/* Breadcrumb */}
+            <div className="bg-white border-b">
+                <div className="max-w-6xl mx-auto px-4 py-3">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Link to="/" className="hover:text-emerald-600">🏠 Accueil</Link>
+                        <ChevronRight size={14} />
+                        <span className="text-gray-900 font-medium">Mathématiques</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Sub Navigation */}
+            <div className="bg-white border-b shadow-sm">
+                <div className="max-w-6xl mx-auto px-4">
+                    <div className="flex gap-1 overflow-x-auto">
+                        {navItems.map((item) => {
+                            const isActive = item.path === '/math'
+                                ? location.pathname === '/math'
+                                : location.pathname.startsWith(item.path);
+                            const Icon = item.icon;
+
+                            return (
+                                <NavLink
+                                    key={item.path}
+                                    to={item.path}
+                                    className={`
+                                        flex items-center gap-2 px-4 py-3 text-sm font-medium
+                                        border-b-2 transition-colors whitespace-nowrap
+                                        ${isActive
+                                            ? 'text-emerald-600 border-emerald-600'
+                                            : 'text-gray-600 border-transparent hover:text-emerald-600 hover:border-emerald-300'
+                                        }
+                                    `}
+                                >
+                                    <Icon size={18} />
+                                    {item.label}
+                                </NavLink>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+
             {/* Main Content */}
-            <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
+            <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-6">
                 {children}
                 <Outlet />
             </main>
 
-            {/* Bottom Navigation */}
-            <nav className="bg-white border-t border-gray-200 sticky bottom-0 z-50">
-                <div className="max-w-4xl mx-auto flex">
-                    {navItems.map((item) => {
-                        const isActive = item.path === '/math'
-                            ? location.pathname === '/math'
-                            : location.pathname.startsWith(item.path);
-                        const Icon = item.icon;
-
-                        return (
-                            <NavLink
-                                key={item.path}
-                                to={item.path}
-                                className={`
-                                    flex-1 flex flex-col items-center justify-center py-3 gap-1
-                                    transition-colors duration-200
-                                    ${isActive
-                                        ? 'text-blue-600 bg-blue-50'
-                                        : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                                    }
-                                `}
-                            >
-                                <Icon size={20} />
-                                <span className="text-[11px] font-medium">{item.label}</span>
-                            </NavLink>
-                        );
-                    })}
+            {/* Footer */}
+            <footer className="bg-gray-800 text-gray-400 mt-auto">
+                <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm">
+                    © 2024 MaClasse • Ressources éducatives pour le Baccalauréat Marocain
                 </div>
-            </nav>
+            </footer>
         </div>
     );
 };

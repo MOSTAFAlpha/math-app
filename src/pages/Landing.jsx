@@ -1,221 +1,231 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Atom, FlaskConical, Languages, BookOpen, GraduationCap, Dna, ChevronRight, BookMarked } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Calculator, Atom, Dna, GraduationCap, ChevronRight } from 'lucide-react';
 
-const subjects = [
-    {
-        id: 'math',
-        name: 'Mathématiques',
-        icon: Calculator,
-        color: '#2563EB',
-        bgColor: '#EFF6FF',
-        desc: 'Suites numériques • Fonctions primitives • Étude de fonctions',
-        exercises: 3,
-        ready: true,
-        link: '/math'
-    },
-    {
-        id: 'physics',
-        name: 'Physique',
-        icon: Atom,
-        color: '#7C3AED',
-        bgColor: '#F5F3FF',
-        desc: 'Mécanique • Électricité • Ondes',
-        exercises: 0,
-        ready: false,
-        link: '/physics'
-    },
-    {
-        id: 'chemistry',
-        name: 'Chimie',
-        icon: FlaskConical,
-        color: '#059669',
-        bgColor: '#ECFDF5',
-        desc: 'Réactions chimiques • Équilibres • Acides et bases',
-        exercises: 0,
-        ready: false,
-        link: '/chemistry'
-    },
-    {
-        id: 'svt',
-        name: 'Sciences de la Vie et de la Terre',
-        icon: Dna,
-        color: '#16A34A',
-        bgColor: '#F0FDF4',
-        desc: 'Biologie • Géologie • Écologie',
-        exercises: 0,
-        ready: false,
-        link: '/svt'
-    },
-    {
-        id: 'english',
-        name: 'Anglais',
-        icon: Languages,
-        color: '#DC2626',
-        bgColor: '#FEF2F2',
-        desc: 'Grammar • Writing • Reading comprehension',
-        exercises: 0,
-        ready: false,
-        link: '/english'
-    },
-    {
-        id: 'french',
-        name: 'Français',
-        icon: BookOpen,
-        color: '#0891B2',
-        bgColor: '#ECFEFF',
-        desc: 'Grammaire • Rédaction • Littérature',
-        exercises: 0,
-        ready: false,
-        link: '/french'
-    }
-];
-
+/**
+ * Landing - Classroom-friendly landing page with large clickable subject cards
+ * Dark mode toggle is now handled globally via ThemeContext
+ */
 const Landing = () => {
-    return (
-        <div className="min-h-screen bg-gray-50">
+    const subjects = [
+        {
+            id: 'math',
+            title: 'Mathématiques',
+            description: 'Suites, limites, dérivées, intégrales, nombres complexes...',
+            icon: Calculator,
+            path: '/math',
+            color: '#2563eb',
+            bgColor: '#dbeafe'
+        },
+        {
+            id: 'physique',
+            title: 'Physique-Chimie',
+            description: 'Ondes, électricité, mécanique, chimie organique...',
+            icon: Atom,
+            path: '/physique-chimie',
+            color: '#7c3aed',
+            bgColor: '#ede9fe'
+        },
+        {
+            id: 'svt',
+            title: 'Sciences de la Vie et de la Terre',
+            description: 'Génétique, immunologie, géologie...',
+            icon: Dna,
+            path: '/svt',
+            color: '#059669',
+            bgColor: '#d1fae5'
+        }
+    ];
 
+    return (
+        <div style={{ minHeight: '100vh', background: 'var(--bg-main)' }}>
             {/* Header */}
-            <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-                <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-                            <GraduationCap size={24} className="text-white" />
-                        </div>
-                        <div>
-                            <h1 className="font-bold text-gray-900 text-lg">Cours 2BAC PC</h1>
-                            <p className="text-xs text-gray-500">Ressources pédagogiques</p>
-                        </div>
+            <header style={{
+                background: 'var(--bg-card)',
+                borderBottom: '1px solid var(--border-color)',
+                padding: 'var(--spacing-lg) var(--spacing-xl)',
+                transition: 'var(--transition-theme)'
+            }}>
+                <div style={{
+                    maxWidth: '1200px',
+                    margin: '0 auto',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 'var(--spacing-md)'
+                }}>
+                    <div style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                        borderRadius: 'var(--radius-md)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                    }}>
+                        <GraduationCap size={28} color="white" />
                     </div>
-                    <span className="px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full">
-                        2024-2025
-                    </span>
+                    <div>
+                        <h1 style={{
+                            fontSize: 'var(--font-size-2xl)',
+                            margin: 0,
+                            background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text'
+                        }}>
+                            MaClasse
+                        </h1>
+                        <p style={{
+                            margin: 0,
+                            color: 'var(--text-muted)',
+                            fontSize: 'var(--font-size-sm)'
+                        }}>
+                            2ème Baccalauréat - Maroc
+                        </p>
+                    </div>
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="max-w-4xl mx-auto px-6 py-8">
-
+            <main style={{
+                maxWidth: '1200px',
+                margin: '0 auto',
+                padding: 'var(--spacing-2xl) var(--spacing-lg)'
+            }}>
                 {/* Welcome Section */}
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 mb-8 text-white"
-                >
-                    <div className="flex items-start gap-4">
-                        <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <BookMarked size={28} className="text-white" />
-                        </div>
-                        <div>
-                            <h2 className="text-2xl font-bold mb-2">Bienvenue sur votre espace de cours</h2>
-                            <p className="text-blue-100 text-sm leading-relaxed">
-                                Retrouvez ici tous les exercices, corrections détaillées et résumés de cours
-                                pour préparer votre baccalauréat. Sélectionnez une matière pour commencer.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Quick Stats */}
-                    <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/20">
-                        <div>
-                            <div className="text-2xl font-bold">6</div>
-                            <div className="text-blue-200 text-sm">Matières</div>
-                        </div>
-                        <div>
-                            <div className="text-2xl font-bold">3</div>
-                            <div className="text-blue-200 text-sm">Exercices corrigés</div>
-                        </div>
-                        <div>
-                            <div className="text-2xl font-bold">∞</div>
-                            <div className="text-blue-200 text-sm">Révisions</div>
-                        </div>
-                    </div>
-                </motion.section>
-
-                {/* Subjects Section */}
-                <section>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Matières disponibles</h3>
-
-                    <div className="grid gap-4">
-                        {subjects.map((sub, index) => (
-                            <motion.div
-                                key={sub.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.05 }}
-                            >
-                                <Link to={sub.link}>
-                                    <div
-                                        className={`
-                      bg-white rounded-xl border border-gray-200 p-5 
-                      hover:border-gray-300 hover:shadow-md transition-all duration-200
-                      flex items-center gap-4 group
-                      ${!sub.ready ? 'opacity-60' : ''}
-                    `}
-                                    >
-                                        {/* Icon */}
-                                        <div
-                                            className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
-                                            style={{ backgroundColor: sub.bgColor }}
-                                        >
-                                            <sub.icon size={28} style={{ color: sub.color }} />
-                                        </div>
-
-                                        {/* Content */}
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <h4 className="font-semibold text-gray-900">{sub.name}</h4>
-                                                {sub.ready ? (
-                                                    <span
-                                                        className="px-2 py-0.5 rounded text-xs font-medium"
-                                                        style={{ backgroundColor: sub.bgColor, color: sub.color }}
-                                                    >
-                                                        {sub.exercises} exercices
-                                                    </span>
-                                                ) : (
-                                                    <span className="px-2 py-0.5 rounded bg-gray-100 text-gray-500 text-xs font-medium">
-                                                        Bientôt disponible
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <p className="text-sm text-gray-500 truncate">{sub.desc}</p>
-                                        </div>
-
-                                        {/* Arrow */}
-                                        <ChevronRight
-                                            size={20}
-                                            className="text-gray-300 group-hover:text-gray-500 transition-colors flex-shrink-0"
-                                        />
-                                    </div>
-                                </Link>
-                            </motion.div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Info Notice */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-xl"
-                >
-                    <p className="text-sm text-amber-800">
-                        <strong>📢 Note :</strong> Les matières marquées "Bientôt disponible" seront ajoutées progressivement.
-                        Consultez régulièrement cette page pour les nouveaux contenus.
+                <div style={{
+                    textAlign: 'center',
+                    marginBottom: 'var(--spacing-2xl)'
+                }}>
+                    <h2 style={{
+                        fontSize: 'var(--font-size-3xl)',
+                        marginBottom: 'var(--spacing-md)'
+                    }}>
+                        Bienvenue sur votre plateforme de cours
+                    </h2>
+                    <p style={{
+                        fontSize: 'var(--font-size-lg)',
+                        color: 'var(--text-muted)',
+                        maxWidth: '600px',
+                        margin: '0 auto'
+                    }}>
+                        Cours, exercices, résumés et quiz pour réussir votre Baccalauréat
                     </p>
-                </motion.div>
+                </div>
 
+                {/* Subject Cards */}
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gap: 'var(--spacing-lg)'
+                }}>
+                    {subjects.map(subject => {
+                        const Icon = subject.icon;
+                        return (
+                            <Link
+                                key={subject.id}
+                                to={subject.path}
+                                style={{ textDecoration: 'none', color: 'inherit' }}
+                            >
+                                <div
+                                    className="glass"
+                                    style={{
+                                        background: 'var(--bg-card)',
+                                        border: '2px solid var(--border-color)',
+                                        borderRadius: 'var(--radius-lg)',
+                                        padding: 'var(--spacing-xl)',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        minHeight: '200px',
+                                        display: 'flex',
+                                        flexDirection: 'column'
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.borderColor = subject.color;
+                                        e.currentTarget.style.transform = 'translateY(-8px)';
+                                        e.currentTarget.style.boxShadow = `0 20px 40px ${subject.color}25`;
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.borderColor = 'var(--border-color)';
+                                        e.currentTarget.style.transform = 'translateY(0)';
+                                        e.currentTarget.style.boxShadow = 'none';
+                                    }}
+                                >
+                                    <div style={{
+                                        width: '64px',
+                                        height: '64px',
+                                        background: `linear-gradient(135deg, ${subject.bgColor} 0%, ${subject.color}20 100%)`,
+                                        borderRadius: 'var(--radius-md)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        marginBottom: 'var(--spacing-lg)',
+                                        boxShadow: `0 4px 12px ${subject.color}30`
+                                    }}>
+                                        <Icon size={32} color={subject.color} />
+                                    </div>
+                                    <h3 style={{
+                                        fontSize: 'var(--font-size-xl)',
+                                        marginBottom: 'var(--spacing-sm)',
+                                        color: subject.color,
+                                        fontWeight: '600'
+                                    }}>
+                                        {subject.title}
+                                    </h3>
+                                    <p style={{
+                                        color: 'var(--text-muted)',
+                                        flex: 1,
+                                        marginBottom: 'var(--spacing-md)',
+                                        lineHeight: '1.6'
+                                    }}>
+                                        {subject.description}
+                                    </p>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        color: subject.color,
+                                        fontWeight: '600',
+                                        gap: '4px'
+                                    }}>
+                                        Accéder aux cours
+                                        <ChevronRight size={20} />
+                                    </div>
+                                </div>
+                            </Link>
+                        );
+                    })}
+                </div>
+
+                {/* Info Section */}
+                <div style={{
+                    marginTop: 'var(--spacing-2xl)',
+                    padding: 'var(--spacing-xl)',
+                    background: 'linear-gradient(135deg, var(--bg-section) 0%, var(--bg-card) 100%)',
+                    borderRadius: 'var(--radius-lg)',
+                    textAlign: 'center',
+                    border: '1px solid var(--border-color)'
+                }}>
+                    <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>
+                        📚 Ressources complètes pour le Bac
+                    </h3>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: 0 }}>
+                        Chaque chapitre contient : <strong>Cours</strong> • <strong>Exercices</strong> • <strong>Corrigés PDF</strong> • <strong>Résumés</strong> • <strong>Quiz</strong>
+                    </p>
+                </div>
             </main>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-gray-200 mt-12">
-                <div className="max-w-4xl mx-auto px-6 py-6 text-center text-sm text-gray-500">
-                    © 2024 Cours 2BAC PC • Ressources pédagogiques pour la classe
-                </div>
+            <footer style={{
+                borderTop: '1px solid var(--border-color)',
+                padding: 'var(--spacing-lg)',
+                textAlign: 'center',
+                color: 'var(--text-muted)',
+                fontSize: 'var(--font-size-sm)',
+                marginTop: 'auto'
+            }}>
+                © 2024 MaClasse • Ressources éducatives pour le 2ème Baccalauréat Marocain
             </footer>
-
         </div>
     );
 };
