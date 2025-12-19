@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
     ArrowLeft, Plus, Save, Copy, Eye, Download,
-    BookOpen, FileText, HelpCircle, Trash2, ChevronDown, ChevronUp
+    BookOpen, FileText, HelpCircle, Trash2, ChevronDown, ChevronUp, Code, RefreshCw
 } from 'lucide-react';
 
 /**
@@ -35,6 +35,10 @@ const AdminPanel = () => {
     const [quizQuestions, setQuizQuestions] = useState([
         { id: 1, question: '', options: ['', '', '', ''], correctAnswer: 0, explanation: '' }
     ]);
+
+    // Editable code state
+    const [editableCode, setEditableCode] = useState('');
+    const [isCodeEdited, setIsCodeEdited] = useState(false);
 
     // Add section
     const addSection = (type) => {
@@ -142,15 +146,26 @@ export const ${chapter.id.replace(/-/g, '')}Quiz = ${JSON.stringify(quizQuestion
         return code;
     };
 
+    // Sync editable code with generated code
+    const syncCode = () => {
+        setEditableCode(generateCode());
+        setIsCodeEdited(false);
+    };
+
+    // Get current code (edited or generated)
+    const getCurrentCode = () => {
+        return isCodeEdited ? editableCode : generateCode();
+    };
+
     // Copy to clipboard
     const copyCode = () => {
-        navigator.clipboard.writeText(generateCode());
+        navigator.clipboard.writeText(getCurrentCode());
         alert('Code copié dans le presse-papiers!');
     };
 
     // Download as file
     const downloadCode = () => {
-        const blob = new Blob([generateCode()], { type: 'text/javascript' });
+        const blob = new Blob([getCurrentCode()], { type: 'text/javascript' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -185,11 +200,12 @@ export const ${chapter.id.replace(/-/g, '')}Quiz = ${JSON.stringify(quizQuestion
                 {/* Main Editor */}
                 <div>
                     {/* Tabs */}
-                    <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-lg)' }}>
+                    <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-lg)', flexWrap: 'wrap' }}>
                         {[
                             { id: 'chapter', icon: BookOpen, label: 'Chapitre' },
                             { id: 'exercises', icon: FileText, label: 'Exercices' },
-                            { id: 'quiz', icon: HelpCircle, label: 'Quiz' }
+                            { id: 'quiz', icon: HelpCircle, label: 'Quiz' },
+                            { id: 'code', icon: Code, label: '📝 Code Direct' }
                         ].map(tab => (
                             <button
                                 key={tab.id}
@@ -480,7 +496,85 @@ export const ${chapter.id.replace(/-/g, '')}Quiz = ${JSON.stringify(quizQuestion
                         </div>
                     )}
 
-                    {/* Action Buttons */}
+                    {/* Code Direct Tab */}
+                    {activeTab === 'code' && (
+                        <div style={{ background: 'var(--bg-card)', padding: 'var(--spacing-xl)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-md)' }}>
+                                <h3 style={{ margin: 0 }}>✏️ Éditer le Code Directement</h3>
+                                <div style={{ display: 'flex', gap: '8px' }}>
+                                    <button
+                                        onClick={syncCode}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            padding: '8px 16px',
+                                            border: '1px solid var(--border-color)',
+                                            borderRadius: 'var(--radius-sm)',
+                                            background: 'var(--bg-section)',
+                                            cursor: 'pointer',
+                                            color: 'var(--text-primary)'
+                                        }}
+                                    >
+                                        <RefreshCw size={16} /> Régénérer depuis formulaire
+                                    </button>
+                                </div>
+                            </div>
+
+                            {isCodeEdited && (
+                                <div style={{
+                                    background: '#fef3c7',
+                                    color: '#92400e',
+                                    padding: '12px',
+                                    borderRadius: 'var(--radius-sm)',
+                                    marginBottom: 'var(--spacing-md)',
+                                    fontSize: '14px'
+                                }}>
+                                    ⚠️ Le code a été modifié manuellement. Cliquez sur "Régénérer" pour synchroniser avec le formulaire.
+                                </div>
+                            )}
+
+                            <textarea
+                                value={isCodeEdited ? editableCode : generateCode()}
+                                onChange={(e) => {
+                                    setEditableCode(e.target.value);
+                                    setIsCodeEdited(true);
+                                }}
+                                style={{
+                                    width: '100%',
+                                    height: '600px',
+                                    padding: '16px',
+                                    border: '1px solid var(--border-color)',
+                                    borderRadius: 'var(--radius-md)',
+                                    fontFamily: 'Monaco, Consolas, "Courier New", monospace',
+                                    fontSize: '13px',
+                                    lineHeight: '1.6',
+                                    resize: 'vertical',
+                                    background: '#1e293b',
+                                    color: '#e2e8f0',
+                                    outline: 'none'
+                                }}
+                                placeholder="Le code généré apparaîtra ici..."
+                            />
+
+                            <div style={{ marginTop: 'var(--spacing-md)', display: 'flex', gap: 'var(--spacing-sm)' }}>
+                                <button
+                                    onClick={copyCode}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 20px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontWeight: '600', background: '#22c55e', color: 'white' }}
+                                >
+                                    <Copy size={18} /> Copier le Code
+                                </button>
+                                <button
+                                    onClick={downloadCode}
+                                    style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 20px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontWeight: '600', background: '#2563eb', color: 'white' }}
+                                >
+                                    <Download size={18} /> Télécharger .jsx
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+
                     <div style={{ display: 'flex', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-xl)', flexWrap: 'wrap' }}>
                         <button
                             onClick={() => setShowPreview(!showPreview)}
