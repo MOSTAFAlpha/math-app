@@ -571,6 +571,148 @@ export const ${chapter.id.replace(/-/g, '')}Quiz = ${JSON.stringify(quizQuestion
                                     <Download size={18} /> Télécharger .jsx
                                 </button>
                             </div>
+
+                            {/* Terminal Commands Section */}
+                            <div style={{ marginTop: 'var(--spacing-xl)', background: 'var(--bg-section)', padding: 'var(--spacing-lg)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                                <h4 style={{ margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    💻 Commandes Terminal
+                                </h4>
+
+                                {/* Step 1: File name */}
+                                <div style={{ marginBottom: '16px' }}>
+                                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: 'var(--text-muted)', fontSize: '14px' }}>
+                                        1️⃣ Nom du fichier:
+                                    </label>
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <code style={{
+                                            flex: 1,
+                                            background: '#1e293b',
+                                            color: '#22c55e',
+                                            padding: '12px',
+                                            borderRadius: 'var(--radius-sm)',
+                                            fontFamily: 'monospace',
+                                            fontSize: '14px'
+                                        }}>
+                                            src/data/cours{chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}.jsx
+                                        </code>
+                                        <button
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(`src/data/cours${chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}.jsx`);
+                                                alert('Chemin copié!');
+                                            }}
+                                            style={{ padding: '12px', background: '#334155', border: 'none', borderRadius: 'var(--radius-sm)', color: 'white', cursor: 'pointer' }}
+                                        >
+                                            <Copy size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Step 2: Import */}
+                                <div style={{ marginBottom: '16px' }}>
+                                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: 'var(--text-muted)', fontSize: '14px' }}>
+                                        2️⃣ Ajouter l'import dans {chapter.subject}Chapters.jsx:
+                                    </label>
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <code style={{
+                                            flex: 1,
+                                            background: '#1e293b',
+                                            color: '#fbbf24',
+                                            padding: '12px',
+                                            borderRadius: 'var(--radius-sm)',
+                                            fontFamily: 'monospace',
+                                            fontSize: '13px',
+                                            overflowX: 'auto'
+                                        }}>
+                                            {`import { ${chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}Cours, ${chapter.id.replace(/-/g, '') || 'newchapter'}Exercises, ${chapter.id.replace(/-/g, '') || 'newchapter'}Quiz } from './cours${chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}';`}
+                                        </code>
+                                        <button
+                                            onClick={() => {
+                                                const importLine = `import { ${chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}Cours, ${chapter.id.replace(/-/g, '') || 'newchapter'}Exercises, ${chapter.id.replace(/-/g, '') || 'newchapter'}Quiz } from './cours${chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}';`;
+                                                navigator.clipboard.writeText(importLine);
+                                                alert('Import copié!');
+                                            }}
+                                            style={{ padding: '12px', background: '#334155', border: 'none', borderRadius: 'var(--radius-sm)', color: 'white', cursor: 'pointer' }}
+                                        >
+                                            <Copy size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Step 3: Chapter object */}
+                                <div style={{ marginBottom: '16px' }}>
+                                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: 'var(--text-muted)', fontSize: '14px' }}>
+                                        3️⃣ Ajouter au tableau chapters:
+                                    </label>
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <code style={{
+                                            flex: 1,
+                                            background: '#1e293b',
+                                            color: '#60a5fa',
+                                            padding: '12px',
+                                            borderRadius: 'var(--radius-sm)',
+                                            fontFamily: 'monospace',
+                                            fontSize: '12px',
+                                            whiteSpace: 'pre-wrap',
+                                            overflowX: 'auto'
+                                        }}>
+                                            {`{
+    id: '${chapter.id || 'new-chapter'}',
+    title: '${chapter.title || 'New Chapter'}',
+    subtitle: '${chapter.subtitle || 'Description'}',
+    courseContent: <${chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}Cours />,
+    exercises: ${chapter.id.replace(/-/g, '') || 'newchapter'}Exercises,
+    quiz: ${chapter.id.replace(/-/g, '') || 'newchapter'}Quiz
+}`}
+                                        </code>
+                                        <button
+                                            onClick={() => {
+                                                const chapterObj = `{
+    id: '${chapter.id || 'new-chapter'}',
+    title: '${chapter.title || 'New Chapter'}',
+    subtitle: '${chapter.subtitle || 'Description'}',
+    courseContent: <${chapter.title.replace(/[^a-zA-Z]/g, '') || 'NewChapter'}Cours />,
+    exercises: ${chapter.id.replace(/-/g, '') || 'newchapter'}Exercises,
+    quiz: ${chapter.id.replace(/-/g, '') || 'newchapter'}Quiz
+}`;
+                                                navigator.clipboard.writeText(chapterObj);
+                                                alert('Objet copié!');
+                                            }}
+                                            style={{ padding: '12px', background: '#334155', border: 'none', borderRadius: 'var(--radius-sm)', color: 'white', cursor: 'pointer' }}
+                                        >
+                                            <Copy size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Step 4: Deploy */}
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', color: 'var(--text-muted)', fontSize: '14px' }}>
+                                        4️⃣ Déployer:
+                                    </label>
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <code style={{
+                                            flex: 1,
+                                            background: '#1e293b',
+                                            color: '#f472b6',
+                                            padding: '12px',
+                                            borderRadius: 'var(--radius-sm)',
+                                            fontFamily: 'monospace',
+                                            fontSize: '14px'
+                                        }}>
+                                            npm run deploy
+                                        </code>
+                                        <button
+                                            onClick={() => {
+                                                navigator.clipboard.writeText('npm run deploy');
+                                                alert('Commande copiée!');
+                                            }}
+                                            style={{ padding: '12px', background: '#334155', border: 'none', borderRadius: 'var(--radius-sm)', color: 'white', cursor: 'pointer' }}
+                                        >
+                                            <Copy size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     )}
 
